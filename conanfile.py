@@ -1,7 +1,7 @@
 from conans import ConanFile, CMake, tools
 
 
-class natsasioConan(ConanFile):
+class opendnp3Conan(ConanFile):
     name = "opendnp3"
     version = "3.1.1"
     commit = version
@@ -26,6 +26,10 @@ class natsasioConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        static_build = "ON"
+        if self.options["shared"]:  # e.g. if self.options.myoption:
+            static_build = "OFF"
+        cmake.definitions["DNP3_STATIC_LIBS"] = static_build
         cmake.configure(source_dir="opendnp3", args=[])
         cmake.build()
 

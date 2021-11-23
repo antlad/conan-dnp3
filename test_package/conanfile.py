@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 import os
 
 
-class natsasioTestConan(ConanFile):
+class opendnp3TestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     requires = ()

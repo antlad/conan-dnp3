@@ -11,8 +11,8 @@ class opendnp3Conan(ConanFile):
     description = "DNP3 (IEEE-1815) protocol stack."
     topics = ("opcua")
     settings = "cppstd", "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = {"shared": False}
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
     generators = "cmake"
     build_policy = "missing"
 
@@ -29,6 +29,7 @@ class opendnp3Conan(ConanFile):
         static_build = "ON"
         if self.options["shared"]:  # e.g. if self.options.myoption:
             static_build = "OFF"
+        cmake.definitions['CMAKE_POSITION_INDEPENDENT_CODE'] = self.options.fPIC
         cmake.definitions["DNP3_STATIC_LIBS"] = static_build
         cmake.configure(source_dir="opendnp3", args=[])
         cmake.build()
